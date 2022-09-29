@@ -14,6 +14,8 @@ class Program():
         for item in self.user_hand:
             if item[0].lower() == "j" or item[0].lower() == "q" or item[0].lower() == "k":
                 user_count += 10
+            elif item[0] == "10":
+                user_count += 10
             elif item[0] == "9":
                 user_count += 9
             elif item[0] == "8":
@@ -30,8 +32,8 @@ class Program():
                 user_count += 3
             elif item[0] == "2":
                 user_count += 2
-            if item[0] == "a":
-                choice = input(f"Do yu want {item} to count for 1 or 11? : ")
+            if item[0].lower() == "a":
+                choice = input(f"Do you want {item} to count for 1 or 11? : ")
                 if choice == "11":
                     user_count += 11
                 elif choice == "1":
@@ -41,6 +43,8 @@ class Program():
         
         for item in self.dealer_hand:
             if item[0].lower() == "j" or item[0].lower() == "q" or item[0].lower() == "k":
+                dealer_count += 10
+            elif item[0] == "10":
                 dealer_count += 10
             elif item[0] == "9":
                 dealer_count += 9
@@ -58,8 +62,8 @@ class Program():
                 dealer_count += 3
             elif item[0] == "2":
                 dealer_count += 2
-            if item[0] == "a":
-                choice = input(f"Do yu want {item} to count for 1 or 11? : ")
+            if item[0].lower() == "a":
+                choice = input(f"Do you want {item} to count for 1 or 11? : ")
                 if choice == "11":
                     dealer_count += 11
                 elif choice == "1":
@@ -88,10 +92,11 @@ class Program():
             self.pot = 0
 
     def user_turn(self):
+        program = Program()
         while True:
             choice = input("What would you like to do? : Hit/Stay : ")
             if choice[0].lower() == "h":
-                Program.user_hit()
+                program.user_hit()
             elif choice[0].lower() == "s":
                 break
             else:
@@ -160,6 +165,14 @@ class Program():
         pass
 
     def deal_starting_hand(self):
+        if self.user_hand:
+            for item in self.user_hand:
+                self.user_hand.remove(item)
+        if self.dealer_hand:
+            for item in self.dealer_hand:
+                self.dealer_hand.remove(item)
+
+
         for i in range(2):
             self.user_hand.append(self.deck[random.randint(0,len(self.deck) - 1)])
             self.dealer_hand.append(self.deck[random.randint(0,len(self.deck) - 1)])
